@@ -1,16 +1,15 @@
 function solution(id_list, report, k) {
   const reportedInfo = new Object();
 
-  for (let i = 0; i < id_list.length; i++) {
-    reportedInfo[id_list[i]] = new Object();
-    reportedInfo[id_list[i]].reportedCount = 0;
-    reportedInfo[id_list[i]].reporter = [];
-    reportedInfo[id_list[i]].contribute = 0;
+  for (const id of id_list) {
+    reportedInfo[id] = new Object();
+    reportedInfo[id].reportedCount = 0;
+    reportedInfo[id].reporter = [];
+    reportedInfo[id].contribute = 0;
   }
 
-  for (let i = 0; i < report.length; i++) {
-    const eachReport = report[i];
-    const splitedReport = eachReport.split(/\s/);
+  for (const item of report) {
+    const splitedReport = item.split(/\s/);
     const reporter = splitedReport[0];
     const reportedUser = splitedReport[1];
     if (!reportedInfo[reportedUser].reporter.some((i) => i === reporter)) {
@@ -19,17 +18,17 @@ function solution(id_list, report, k) {
     }
   }
 
-  var answer = [];
-  for (let i = 0; i < id_list.length; i++) {
-    if (reportedInfo[id_list[i]].reportedCount >= k) {
-      const contributer = reportedInfo[id_list[i]].reporter;
-      for (let i = 0; i < contributer.length; i++) {
-        reportedInfo[contributer[i]].contribute++;
+  let answer = [];
+  for (const id of id_list) {
+    if (reportedInfo[id].reportedCount >= k) {
+      const contributer = reportedInfo[id].reporter;
+      for (const contributerId of contributer) {
+        reportedInfo[contributerId].contribute++;
       }
     }
   }
-  for (let i = 0; i < id_list.length; i++) {
-    answer.push(reportedInfo[id_list[i]].contribute);
+  for (const id of id_list) {
+    answer.push(reportedInfo[id].contribute);
   }
 
   return answer;
